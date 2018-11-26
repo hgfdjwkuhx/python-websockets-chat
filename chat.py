@@ -20,14 +20,20 @@ REDIS_CHAN = 'chat'
 app = Flask(__name__)
 app.debug = 'DEBUG' in os.environ
 
+app.config['DEBUG'] = True
+app.debug = True
+app.testing = True
+
+
 sockets = Sockets(app)
+
 redis = redis.from_url(REDIS_URL)
 
 
 
 class ChatBackend(object):
     """Interface for registering and updating WebSocket clients."""
-
+    #SERVER_NAME = "localhost:5000"
     def __init__(self):
         self.clients = list()
         self.pubsub = redis.pubsub()
